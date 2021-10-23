@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+        <title>trolled</title>
+        <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+        <style>
+    @font-face {
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/ubuntu/v15/4iCs6KVjbNBYlgoKcg72j00.woff2) format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+      
+    </style>
+<script src="https://cdn.jsdelivr.net/npm/faunadb@latest/dist/faunadb.js"></script>
+    </head>
+    <body onload="start()">
+    </body>
+    <script>
+        var faunadb = window.faunadb
+  var q = faunadb.query
+  var client = new faunadb.Client({
+    secret: 'fnAEWN0RMFAAwFxR2C5vwBRsORnw7OriYRS0cvVd',
+    domain: 'db.eu.fauna.com',
+    scheme: 'https',
+  })
+
+function start(){
+
+
+var segments = window.location.href.split('?')
+let name = segments[1]
+
+client.query(
+  q.Get(
+    q.Match(q.Index('posts_by_name'), name)
+  )
+)
+.then((ret) => 
+
+window.location.href = ret.data.url
+
+)
+.catch(function(e){
+    console.log("Not Found.")
+    window.location.href = "https://google.com"
+});
+
+
+}
+
+        
+
+    </script>
+</html>
